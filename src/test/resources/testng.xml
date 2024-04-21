@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="PureZenz">
+    <test name="SetupConfig">
+        <classes>
+            <class name="demo.selenium_tests.zcommerce.TestCase01"/>
+        </classes>
+    </test>
+</suite>

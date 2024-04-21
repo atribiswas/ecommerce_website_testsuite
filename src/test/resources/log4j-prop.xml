@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <!-- Define the properties for configuration -->
+    <Properties>
+        <Property name="logPath">./logs</Property>
+        <Property name="logPattern">%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n</Property>
+    </Properties>
+
+    <!-- Appenders -->
+    <Appenders>
+        <!-- Console Appender -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${logPattern}" />
+        </Console>
+
+        <!-- Rolling File Appender -->
+        <RollingFile name="File" fileName="${logPath}/app.log"
+                     filePattern="${logPath}/app-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${logPattern}" />
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+    </Appenders>
+
+    <!-- Loggers -->
+    <Loggers>
+        <!-- Root Logger -->
+        <Root level="info">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="File" />
+        </Root>
+
+        <!-- Example of a more specific logger with a different level -->
+        <Logger name="com.example.MyClass" level="debug" additivity="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="File" />
+        </Logger>
+
+        <!-- More specific loggers can be added here -->
+    </Loggers>
+</Configuration>
