@@ -1,5 +1,6 @@
 package demo.selenium_tests.zcommerce.pages;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
@@ -13,8 +14,13 @@ public class Home {
 
     private WebActionWrappers wrap;
 
+    private final String url = "https://www.zcommerce.crio.do";
+
     @FindBy(xpath = "//img[@alt='ZCommerce-icon']")
     WebElement zcLogo;
+
+    @FindBy(xpath = "//button[@class='chakra-button css-1ai4qkv']")
+    WebElement logInButton;
 
     @FindBy(xpath = "//input[@placeholder='Search an Item']")
     WebElement searchBar;
@@ -27,6 +33,12 @@ public class Home {
 
     @FindBy(xpath = "//div[@class='flex items-center justify-center gap-2']")
     WebElement profileDropdown;
+
+    @FindBy(xpath = "//a[@href='/order-history']")
+    WebElement orderHistoryButton;
+
+    @FindBy(xpath = "//h3[@class='text-red-400 text-lg font-semibold cursor-pointer']")
+    WebElement logOutButton;
 
     @FindBy(xpath = "//div[@class='swiper-slide swiper-slide-active']")
     WebElement banner;
@@ -48,9 +60,33 @@ public class Home {
 
     public Home(WebActionWrappers wrap){
         this.wrap = wrap;
-        PageFactory.initElements(new AjaxElementLocatorFactory(wrap.getDriver(), 0), getClass());
+        PageFactory.initElements(new AjaxElementLocatorFactory(wrap.getDriver(), 10), this);
     }
 
-    
+    public void goToHomePage() throws IOException{
+        wrap.get(url);
+    }
+
+    public void logOut() throws InterruptedException, IOException{
+        // return to normal state
+        wrap.click(zcLogo);
+
+        // click on dropdown and select logout
+        wrap.click(profileDropdown);
+        wrap.click(logOutButton);
+    }
+
+    public void clickOnLogin() throws InterruptedException, IOException{
+        wrap.click(logInButton);
+    }
+
+    public void goToOrderHistory() throws InterruptedException, IOException{
+        // return to normal state
+        wrap.click(zcLogo);
+
+        // click on dropdow and select order history
+        wrap.click(profileDropdown);
+        wrap.click(orderHistoryButton);
+    }
 
 }

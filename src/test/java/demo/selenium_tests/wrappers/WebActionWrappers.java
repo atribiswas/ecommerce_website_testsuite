@@ -1,7 +1,6 @@
 package demo.selenium_tests.wrappers;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
@@ -13,8 +12,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.ITestNGMethod;
-
 import demo.selenium_tests.BaseTestSelenium;
 
 public class WebActionWrappers extends BaseTestSelenium {
@@ -37,11 +34,8 @@ public class WebActionWrappers extends BaseTestSelenium {
         }
     }
 
-    public void click(By locator) throws InterruptedException, IOException {
+    public void click(WebElement element) throws InterruptedException, IOException {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
-
             element.click();
 
             Thread.sleep(500);
@@ -53,11 +47,8 @@ public class WebActionWrappers extends BaseTestSelenium {
         }
     }
 
-    public void sendKeys(By locator, String text) throws InterruptedException, IOException {
+    public void sendKeys(WebElement element, String text) throws InterruptedException, IOException {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-
             element.clear();
             element.sendKeys(text);
 
@@ -68,11 +59,9 @@ public class WebActionWrappers extends BaseTestSelenium {
         }
     }
 
-    public String getText(By locator) throws InterruptedException, IOException {
+    public String getText(WebElement element) throws InterruptedException, IOException {
         String text = null;
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 
             text = element.getText();
 
