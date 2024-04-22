@@ -2,6 +2,9 @@ package demo.selenium_tests;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -31,7 +34,7 @@ public class BaseTestSelenium extends BaseTest{
     @Override
     protected void info(String message) throws IOException {
         try{
-            String storedFilePath = String.format("%s/reports/info-screenshot-%s.jpg",System.getProperty("user.dir"),message.toLowerCase().replace(" ", "_"));
+            String storedFilePath = String.format("%s/reports/%s_info-screenshot-%s.jpg",System.getProperty("user.dir"),LocalDateTime.now().toString(),message.toLowerCase().replace(" ", "_"));
 
             File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(file,new File(storedFilePath));

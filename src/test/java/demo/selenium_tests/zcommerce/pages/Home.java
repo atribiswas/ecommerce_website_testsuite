@@ -3,6 +3,7 @@ package demo.selenium_tests.zcommerce.pages;
 import java.io.IOException;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -54,6 +55,8 @@ public class Home {
 
     @FindBy(xpath = "//div[@class='flex flex-col gap-2 min-w-[200px] max-w-[350px] cursor-pointer']")
     List<WebElement> regularItemCards;
+
+    private final By addToCard = new By.ByXPath("//button[text()='ADD TO CART']");
     
     @FindBy(xpath = "//div[@class='bg-[#042C22] flex md:flex-row gap-10 flex-col py-8 px-4 md:px-14 w-full md:justify-between md:items-end']")
     WebElement footerCard;
@@ -76,17 +79,39 @@ public class Home {
         wrap.click(logOutButton);
     }
 
-    public void clickOnLogin() throws InterruptedException, IOException{
+    public Login clickOnLogin() throws InterruptedException, IOException{
         wrap.click(logInButton);
+        return new Login(wrap);
     }
 
-    public void goToOrderHistory() throws InterruptedException, IOException{
+    public Orders goToOrderHistory() throws InterruptedException, IOException{
         // return to normal state
         wrap.click(zcLogo);
 
         // click on dropdow and select order history
         wrap.click(profileDropdown);
         wrap.click(orderHistoryButton);
+
+        return new Orders(wrap);
+
     }
 
+    public void searchForProduct(String word) throws InterruptedException, IOException{
+        wrap.sendKeys(searchBar, word);
+    }
+
+    public void addProductToCard(Integer index) throws InterruptedException, IOException{
+        wrap.click(regularItemCards.get(index).findElement(addToCard));
+    }
+
+    public void addProductToCard(String name) throws InterruptedException, IOException{
+        for(WebElement we: regularItemCards){
+            if(we.getText().toLowerCase().contains(name)) wrap.click(we.findElement(addToCard));
+        }
+    }
+
+    public Checkout proceedToCheckout() throws InterruptedException, IOException{
+        wrap.click(cartButton);
+        return new Checkout(wrap);
+    }
 }
